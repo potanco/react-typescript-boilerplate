@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { api } from './api';
@@ -27,6 +28,9 @@ function App(props: Props): JSX.Element {
       <Router>
         <Switch>
           <Route path="/">
+            <Helmet>
+              <title>Potan - Homepage</title>
+            </Helmet>
             <div>{i18n.t('welcomeMessage')}</div>
           </Route>
         </Switch>
