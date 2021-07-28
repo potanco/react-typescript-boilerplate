@@ -6,11 +6,15 @@ import store from './app/store';
 import './i18n';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { makeServer } from './server';
 
 export const lang = localStorage.getItem('lang') ? localStorage.getItem('lang') : localStorage.setItem('lang', 'en');
 
 export const isRtl = lang !== undefined ? lang !== 'en' : false;
 
+if (process.env.NODE_ENV === 'development') {
+  makeServer({ environment: 'development' });
+}
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

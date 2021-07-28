@@ -1,16 +1,20 @@
-import dayjs from "dayjs";
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { api } from './api';
+import './App.css';
 
 type Props = {
   isRtl: boolean;
 };
-function App(props: Props) {
+function App(props: Props): JSX.Element {
   const { i18n } = useTranslation();
 
-  i18n.on("languageChanged", () => {
+  api.get('/api/users').then((response) => {
+    console.log(response);
+  });
+  i18n.on('languageChanged', () => {
     window.location.reload();
   });
 
@@ -19,14 +23,11 @@ function App(props: Props) {
   });
 
   return (
-    <div
-      className={`App lang-${i18n.language}`}
-      dir={props.isRtl ? "rtl" : "ltr"}
-    >
+    <div className={`App lang-${i18n.language}`} dir={props.isRtl ? 'rtl' : 'ltr'}>
       <Router>
         <Switch>
           <Route path="/">
-            <div>{i18n.t("welcomeMessage")}</div>
+            <div>{i18n.t('welcomeMessage')}</div>
           </Route>
         </Switch>
       </Router>
