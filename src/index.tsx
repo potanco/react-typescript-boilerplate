@@ -1,15 +1,26 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./app/App";
 import store from "./app/store";
+import "./i18n";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+
+export const lang = localStorage.getItem("lang")
+  ? localStorage.getItem("lang")
+  : localStorage.setItem("lang", "en");
+
+export const isRtl = lang !== undefined ? lang !== "en" : false;
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      {lang !== null && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <App isRtl={isRtl} />
+        </Suspense>
+      )}
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

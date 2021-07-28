@@ -1,14 +1,36 @@
+import dayjs from "dayjs";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-function App() {
+
+type Props = {
+  isRtl: boolean;
+};
+function App(props: Props) {
+  const { i18n } = useTranslation();
+
+  i18n.on("languageChanged", () => {
+    window.location.reload();
+  });
+
+  useEffect(() => {
+    dayjs.locale(i18n.language);
+  });
+
   return (
-    <Router>
-      <Switch>
-        <Route path="/">
-          <p className="diagonal-fractions">1/2</p>
-        </Route>
-      </Switch>
-    </Router>
+    <div
+      className={`App lang-${i18n.language}`}
+      dir={props.isRtl ? "rtl" : "ltr"}
+    >
+      <Router>
+        <Switch>
+          <Route path="/">
+            <div>{i18n.t("welcomeMessage")}</div>
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
